@@ -9,6 +9,7 @@ let increment = 0.0;
 let bgcolor = [0, 0, 0, 1];
 let textcolor = [0, 1, 0];
 
+let stopRotBtn;
 let rotateslider;
 let resetPosBtn;
 
