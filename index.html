@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch</title>
+    <style>
+        html,
+        body {
+            margin: 50;
+            padding: 0;
+            background-color: white;
+        }
+        #canvas1 {
+            display: flex;
+
+
+        }
+        .button {
+            margin: 10px;
+            margin-left: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            width: 200px;
+            padding: 120;
+            background: #47ccff;
+            border: 5px solid #000000;
+            border-radius: 35px;
+            overflow: hidden;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial sans-serif;
+            font-size: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .button:hover {
+            background: #0f8ce1;
+            border-radius: 50px;
+
+        }
+        .button:active {
+            background: black;
+            color: white;
+        }
+        .resetbutton {
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            background: #a9f061;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            overflow: hidden;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .resetbutton:hover {
+            background: #0f8ce1;
+            border-radius: 40px;
+
+        }
+        .resetbutton:active {
+            background: black;
+            color: white;
+            border-radius: 40px;
+
+        }
+        .slider {
+            width: 100%;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 1;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        .slider:hover {
+            opacity: 1;
+        }
+        .h1 {
+            color: black;
+            align-items: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial sans-serif;
+            font-size: 30px;
+            font-weight: 500;
+        }
+        .control-elements-container {
+            margin-top: 10px;
+            justify-content: space-evenly;
+            align-items: center;
+            display: flex;
+            width: auto;
+            height: auto;
+            max-width: 1014px;
+            min-height: 150px;
+            border: 6px solid #000;
+            border-radius: 15px;
+        }
+        .element1 {
+            margin: 10px;
+            flex: 1;
+            align-items: center;
+            height: auto;
+            width: 100%;
+        }
+        .element2 {
+            flex: 6;
+            margin: 10px;
+            width: 100%;
+        }
+        .element3 {
+            flex: 3;
+            margin: 10px;
+            width: auto;
+        }
+        .element3:active {
+            background: black;
+            color: white;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .reset_button {
+            overflow: hidden;
+        }
+        .top-elements-container {
+            margin-top: 10px;
+            align-items: center;
+            justify-content: space-evenly;
+            display: flex;
+            width: auto;
+            height: auto;
+            max-width: 1014px;
+            min-height: 150px;
+            border: 6px solid #000;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1" width="1024" height="1024"></canvas>
+    <div>
+        <h1>Press Space to stop the rotation.</h1>
+    </div>
+
+    <div class="top-elements-container">
+        <div><button id="stoprt" type="button" class="button">
+                <span class="button__text">Stop Rotation</span>
+            </button>
+        </div>
+        <div>
+            <label for="colorpicker">Background Color Picker:
+                <input type="color" id="bgcolorpicker" value="#000000">
+            </label>
+        </div>
+        <div>
+            <label for="colorpicker">Graphics Color Picker:
+                <input type="color" id="textcolorpicker" value="#199999">
+            </label>
+        </div>
+    </div>
+
+    <div class="control-elements-container">
+        <div class="element1">
+            <h1 class="h1">Rotate:</h1>
+        </div>
+        <div class="element2">
+            <input id="rotateslider" class="slider" type="range" min="-100" max="100" value="0">
+
+        </div>
+        <div class="element3">
+            <button id="resetpos" type="button" class="resetbutton">
+                <span>Reset Position</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script id="vertex-shader" type="s-shader/x-vertex">
+        precision mediump float;
+        attribute vec4 vPosition;
+        uniform float theta;
+        void main(){
+            gl_PointSize = 1.0;
+            gl_Position = vPosition;
+            gl_Position.x = cos(theta) * vPosition.x - sin(theta) * vPosition.y;
+            gl_Position.y = sin(theta) * vPosition.x + cos(theta) * vPosition.y;
+            gl_Position.z = 0.0;
+            gl_Position.w = 1.0;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 u_color;
+        void main() {
+            gl_FragColor = vec4(u_color);
+        }
+    </script>
+	<script src="/common/MV.js"></script>    
+	<script src="/common/initShaders.js"></script>
+	<script src="/common/webgl-utils.js"></script>
+    <script src="19290305.js"></script>
+
+</body>
+
+</html>
